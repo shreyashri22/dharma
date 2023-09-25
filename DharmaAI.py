@@ -8,7 +8,7 @@ import openai
 from dotenv import load_dotenv
 import os
 from langchain.utilities import SerpAPIWrapper
-import datetime
+from datetime import datetime,strftime
 import requests
 
 
@@ -104,7 +104,9 @@ def main():
             if ('yes' or 'sure' or 'yeah') in tmp.lower():
                 res=consult
                 st.write("Please select your preferable timeslot from below or visit https://calendly.com/shrivastavanolo/test to book a consultation")
-                st.write(res)    
+                for i in res:
+                    date_string = i['scheduling_url'].strftime("%B %d, %Y %H:%M")
+                    st.write(i['start_time'],date_string)    
             tmp=None
 
 
