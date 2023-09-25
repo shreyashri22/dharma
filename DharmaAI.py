@@ -8,10 +8,10 @@ import openai
 from dotenv import load_dotenv
 import os
 from langchain.utilities import SerpAPIWrapper
-# from langchain.agents import load_tools
-# from langchain.agents import initialize_agent
-# from langchain.agents import AgentType
-# from langchain.chat_models import HumanInputChatModel
+import datetime
+import requests
+
+
 
 load_dotenv()
 openai.api_key=st.secrets["OPENAI_API_KEY"]
@@ -22,6 +22,24 @@ llm2=OpenAI(temperature=0)
 message_history = RedisChatMessageHistory(
 url=st.secrets["redis_url"], ttl=600, session_id="username"
 )
+
+def consult():
+    now = datetime.datetime.now()
+    startime=str(now)
+    nyear=int(now[:4])+1
+    endtime=str(nyear)+now[4:]
+    url = "https://api.calendly.com/event_type_available_times"
+
+    querystring = {"event_type":"https://api.calendly.com/event_types/test","start_time":startime,"end_time":endtime}
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": calendlyapi
+    }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+
+    return (response.text)
 
 def main():
     search=SerpAPIWrapper()
@@ -80,10 +98,15 @@ def main():
         message_history.add_user_message(query)
         if tmp != None:
             query=tmp
-        if "help" in query.lower():
-            message_history.add_ai_message("May I book a consultation for you with our top consultants?")
-            st.write("May I book a consultation for you with our top consultants?")
 
+        if ("help" or "consult" or "lawyer") in query.lower():
+            message_history.add_ai_message("May I book a consultation for you with our top consultants?")
+            tmp=st.text_input("May I book a consultation for you with our top consultants?")
+            if ('yes' or 'sure' or 'absolutely' or 'yeah') in tmp.lower():
+                res=consult
+                st.write("Please select your preferable timeslot from below or visit https://calendly.com/shrivastavanolo/test to book a consultation")
+                st.write(res)    
+            tmp=None
 
 
         elif ("agent" or "talk to agent" or "connect me") in query.strip().lower():
