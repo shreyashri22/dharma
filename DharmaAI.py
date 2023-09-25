@@ -25,10 +25,10 @@ def consult():
     now = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     startime=str(now)
     tm=startime[5:7]
-    if tm==12:
+    if tm=='12':
         nmonth="01"
     else:
-        nmonth=str(tm+1)
+        nmonth=str(int(tm)+1)
     endtime=startime[:5]+nmonth+startime[7:]
     url = "https://api.calendly.com/event_type_available_times"
 
