@@ -96,7 +96,7 @@ def main():
         if tmp != None:
             query=tmp
 
-        if ("help" or "consult" or "lawyer") in query.lower():
+        if ("help" or "consult" or "lawyer"or"schedule"or"appointment") in query.lower():
             message_history.add_ai_message("May I book a consultation for you with our top consultants?")
             tmp=st.text_input("May I book a consultation for you with our top consultants?")
             if ('yes' or 'sure' or 'yeah') in tmp.lower():
