@@ -24,7 +24,7 @@ url=st.secrets["redis_url"], ttl=600, session_id="username"
 def consult():
     now = datetime.now()
     startime=str(now)
-    nyear=int(str(now[:4]))+1
+    nyear=int(startime[:4])+1
     endtime=str(nyear)+startime[4:]
     url = "https://api.calendly.com/event_type_available_times"
 
