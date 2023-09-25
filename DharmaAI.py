@@ -25,7 +25,7 @@ def consult():
     now = datetime.now()
     startime=str(now)
     nyear=int(str(now[:4]))+1
-    endtime=str(nyear)+str(now[4:])
+    endtime=str(nyear)+startime[4:]
     url = "https://api.calendly.com/event_type_available_times"
 
     querystring = {"event_type":"https://api.calendly.com/event_types/test","start_time":startime,"end_time":endtime}
