@@ -14,7 +14,7 @@ import requests
 load_dotenv()
 openai.api_key=st.secrets["OPENAI_API_KEY"]
 serpapikey=st.secrets["SERPAPI_API_KEY"]
-calendlyapi=st.secrets['calendly_api']
+calendlyapi=st.secrets["calendly_api"]
 llm = ChatOpenAI(temperature=0)
 llm2=OpenAI(temperature=0)
 message_history = RedisChatMessageHistory(
@@ -32,7 +32,7 @@ def consult():
 
     headers = {
         "Content-Type": "application/json",
-        "Authorization": calendlyapi
+        "Authorization": str(calendlyapi)
     }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
