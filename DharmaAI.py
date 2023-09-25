@@ -8,10 +8,8 @@ import openai
 from dotenv import load_dotenv
 import os
 from langchain.utilities import SerpAPIWrapper
-from datetime import datetime,strftime
+from datetime import datetime
 import requests
-
-
 
 load_dotenv()
 openai.api_key=st.secrets["OPENAI_API_KEY"]
@@ -105,7 +103,8 @@ def main():
                 res=consult
                 st.write("Please select your preferable timeslot from below or visit https://calendly.com/shrivastavanolo/test to book a consultation")
                 for i in res:
-                    date_string = i['scheduling_url'].strftime("%B %d, %Y %H:%M")
+                    dt=datetime(i['scheduling_url'])
+                    date_string = dt.strftime("%B %d, %Y %H:%M")
                     st.write(i['start_time'],date_string)    
             tmp=None
 
