@@ -12,34 +12,16 @@ from langchain.utilities import SerpAPIWrapper
 # from langchain.agents import initialize_agent
 # from langchain.agents import AgentType
 # from langchain.chat_models import HumanInputChatModel
+
 load_dotenv()
 openai.api_key=st.secrets["OPENAI_API_KEY"]
 serpapikey=st.secrets["SERPAPI_API_KEY"]
+calendlyapi=st.secrets['calendly_api']
 llm = ChatOpenAI(temperature=0)
 llm2=OpenAI(temperature=0)
 message_history = RedisChatMessageHistory(
 url=st.secrets["redis_url"], ttl=600, session_id="username"
 )
-
-# st.session_state["message_hist"]="Hi I'm DharmaAI bot. How may I help you today?"
-
-
-# def get_input():
-#     # if 'message_hist' not in st.session_state:
-#     #     st.session_state.message_hist="Hi I'm DharmaAI bot. How may I help you today?"
-
-#     # con=st.text_input(thought,placeholder="Type here",max_chars=1000)
-#     # content=llm(con)
-#     # return content
-#     con=st.text_input(label="Could you explain the query in more detail?",placeholder="Type here",max_chars=1000)
-#     contents=llm2(con)
-#     # st.session_state.message_hist.append("Could you explain the query in more detail?",con,content)
-#     message_history.add_ai_message("Could you explain the query in more detail?")
-#     message_history.add_ai_message(contents)
-
-#     message_history.add_user_message(con)
-
-#     return contents
 
 def main():
     search=SerpAPIWrapper()
@@ -67,8 +49,6 @@ def main():
         input_variables=["input", "chat_history", "agent_scratchpad"],
     )
 
-    # message_history.add_user_message(query)
-    # message_history.clear()
     if len(message_history.messages)>10:
         message_history.clear()
 
@@ -100,12 +80,7 @@ def main():
         message_history.add_user_message(query)
         if tmp != None:
             query=tmp
-        # if 'message_hist' not in st.session_state:
-        #     st.session_state.message_hist="Hi I'm DharmaAI bot. How may I help you today?"
-        # st.session_state.message_hist.append(query)
-        # st.write(st.session_state.message_hist)
         if "help" in query.lower():
-            # st.session_state.message_hist.append("May I book a consultation for you with our top consultants?")
             message_history.add_ai_message("May I book a consultation for you with our top consultants?")
             st.write("May I book a consultation for you with our top consultants?")
 
@@ -113,28 +88,22 @@ def main():
 
         elif ("agent" or "talk to agent" or "connect me") in query.strip().lower():
             message_history.add_ai_message("I will shortly connect you to a live agent")
-            # st.session_state.message_hist.append("I will shortly connect you to a live agent")
             st.write("I will shortly connect you to a live agent")
 
 
 
         elif "bye" in query.strip().lower():
             message_history.add_ai_message("Thanks for talking to us. How was your experience?")
-            # st.session_state.message_hist.append("How was your experience with us?")
             st.write("Thanks for talking to us. How was your experience?")
             message_history.clear()
-            # st.session_state.message_hist=""
-            # st.write(st.session_state.message_hist)
 
 
 
         elif "thank" in query.strip().lower():
             message_history.add_ai_message("Thanks for talking to us. How was your experience?")
-            # st.session_state.message_hist.append("How was your experience with us?")
             st.write("Thanks for talking to us. How was your experience?")
             message_history.clear()
-            # st.session_state.message_hist=""
-            # st.write(st.session_state.message_hist)
+
 
         elif "AI:" in query.strip().lower():
             ind=res.index("AI:")
@@ -144,10 +113,7 @@ def main():
 
 
         else:
-            # message_history.clear()
-            # message_history.add_ai_message(res)
             res=ask(query)
-            # st.session_state.message_hist.append(res)
             if "Question:" in res:
                 ind=res.index("Question:")
                 tmp=st.text_input(res[ind:],placeholder="Type here",max_chars=1000)
