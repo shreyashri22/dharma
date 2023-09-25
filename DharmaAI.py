@@ -39,7 +39,7 @@ def consult():
 
     response = requests.request("GET", url, headers=headers, params=querystring)
 
-    return (response.text)
+    return (response.text["collection"])
 
 def main():
     search=SerpAPIWrapper()
