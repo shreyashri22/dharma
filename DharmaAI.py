@@ -24,8 +24,12 @@ url=st.secrets["redis_url"], ttl=600, session_id="username"
 def consult():
     now = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     startime=str(now)
-    nyear=int(startime[:4])+1
-    endtime=str(nyear)+startime[4:]
+    tm=startime[5:7]
+    if tm==12:
+        nmonth="01"
+    else:
+        nmonth=str(tm+1)
+    endtime=startime[:5]+nmonth+startime[7:]
     url = "https://api.calendly.com/event_type_available_times"
 
     querystring = {"event_type":"https://api.calendly.com/event_types/test","start_time":startime,"end_time":endtime}
