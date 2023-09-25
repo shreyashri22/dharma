@@ -36,7 +36,7 @@ def consult():
 
     headers = {
         "Content-Type": "application/json",
-        "Authorization": str(calendlyapi)
+        "Authorization": calendlyapi
     }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
