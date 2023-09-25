@@ -37,7 +37,7 @@ def consult():
 
     response = requests.request("GET", url, headers=headers, params=querystring)
 
-    return (response.text["collection"])
+    return (response.text)
 
 def main():
     search=SerpAPIWrapper()
@@ -102,7 +102,7 @@ def main():
             if ('yes' or 'sure' or 'yeah') in tmp.lower():
                 res=consult()
                 st.write("Please select your preferable timeslot from below or visit https://calendly.com/shrivastavanolo/test to book a consultation")
-                for i in res:
+                for i in res["collection"]:
                     dt=datetime(i['scheduling_url'])
                     date_string = dt.strftime("%B %d, %Y %H:%M")
                     st.write(i['start_time'],date_string)    
