@@ -22,7 +22,7 @@ url=st.secrets["redis_url"], ttl=600, session_id="username"
 )
 
 def consult():
-    now = datetime.now()
+    now = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     startime=str(now)
     nyear=int(startime[:4])+1
     endtime=str(nyear)+startime[4:]
