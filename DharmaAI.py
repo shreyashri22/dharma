@@ -92,8 +92,7 @@ def main():
 
     tmp=None
 
-    st.write("Hi I'm DharmaAI bot. How may I help you today?")
-    query=st.text_input(" ",placeholder="Type here",max_chars=1000)
+    query=st.text_input(" ",placeholder="Hi, I'm DharmaAI bot. How may I help you?",max_chars=1000)
     if query:
         message_history.add_user_message(query)
         if tmp != None:
@@ -102,7 +101,7 @@ def main():
         if ("help" or "consult" or "lawyer") in query.lower():
             message_history.add_ai_message("May I book a consultation for you with our top consultants?")
             tmp=st.text_input("May I book a consultation for you with our top consultants?")
-            if ('yes' or 'sure' or 'absolutely' or 'yeah') in tmp.lower():
+            if ('yes' or 'sure' or 'yeah') in tmp.lower():
                 res=consult
                 st.write("Please select your preferable timeslot from below or visit https://calendly.com/shrivastavanolo/test to book a consultation")
                 st.write(res)    
@@ -112,7 +111,6 @@ def main():
         elif ("agent" or "talk to agent" or "connect me") in query.strip().lower():
             message_history.add_ai_message("I will shortly connect you to a live agent")
             st.write("I will shortly connect you to a live agent")
-
 
 
         elif "bye" in query.strip().lower():
