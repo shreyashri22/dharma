@@ -100,7 +100,7 @@ def main():
             message_history.add_ai_message("May I book a consultation for you with our top consultants?")
             tmp=st.text_input("May I book a consultation for you with our top consultants?")
             if ('yes' or 'sure' or 'yeah') in tmp.lower():
-                res=consult
+                res=consult()
                 st.write("Please select your preferable timeslot from below or visit https://calendly.com/shrivastavanolo/test to book a consultation")
                 for i in res:
                     dt=datetime(i['scheduling_url'])
