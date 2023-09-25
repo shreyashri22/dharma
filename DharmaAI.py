@@ -103,9 +103,10 @@ def main():
                 res=consult()
                 st.write("Please select your preferable timeslot from below or visit https://calendly.com/shrivastavanolo/test to book a consultation")
                 for i in list(res):
-                    dt=datetime(i['scheduling_url'])
-                    date_string = dt.strftime("%B %d, %Y %H:%M")
-                    st.write(i['start_time'],date_string)    
+                    # dt=datetime(i['scheduling_url'])
+                    # date_string = dt.strftime("%B %d, %Y %H:%M")
+                    # st.write(i['start_time'],date_string)    
+                    st.write(i)
             tmp=None
 
 
