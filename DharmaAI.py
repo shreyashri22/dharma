@@ -8,7 +8,7 @@ import openai
 from dotenv import load_dotenv
 import os
 from langchain.utilities import SerpAPIWrapper
-from datetime import datetime
+# from datetime import datetime
 import requests
 
 load_dotenv()
@@ -21,27 +21,27 @@ message_history = RedisChatMessageHistory(
 url=st.secrets["redis_url"], ttl=600, session_id="username"
 )
 
-def consult():
-    now = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-    startime=str(now)
-    tm=startime[5:7]
-    if tm=='12':
-        nmonth="01"
-    else:
-        nmonth=str(int(tm)+1)
-    endtime=startime[:5]+nmonth+startime[7:]
-    url = "https://api.calendly.com/event_type_available_times"
+# def consult():
+#     now = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+#     startime=str(now)
+#     tm=startime[5:7]
+#     if tm=='12':
+#         nmonth="01"
+#     else:
+#         nmonth=str(int(tm)+1)
+#     endtime=startime[:5]+nmonth+startime[7:]
+#     url = "https://api.calendly.com/event_type_available_times"
 
-    querystring = {"event_type":"https://api.calendly.com/event_types/test","start_time":startime,"end_time":endtime}
+#     querystring = {"event_type":"https://api.calendly.com/event_types/test","start_time":startime,"end_time":endtime}
 
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": calendlyapi
-    }
+#     headers = {
+#         "Content-Type": "application/json",
+#         "Authorization": calendlyapi
+#     }
 
-    response = requests.request("GET", url, headers=headers, params=querystring)
+#     response = requests.request("GET", url, headers=headers, params=querystring)
 
-    return (response.text)
+#     return (response.text)
 
 def main():
     search=SerpAPIWrapper()
@@ -104,13 +104,13 @@ def main():
             message_history.add_ai_message("May I book a consultation for you with our top consultants?")
             tmp=st.text_input("May I book a consultation for you with our top consultants?")
             if ('yes' or 'sure' or 'yeah') in tmp.lower():
-                res=consult()
-                st.write("Please select your preferable timeslot from below or visit https://calendly.com/shrivastavanolo/test to book a consultation")
+                # res=consult()
+                st.write("Visit https://calendly.com/shrivastavanolo/test to book a consultation")
                     # dt=datetime(i['scheduling_url'])
                     # date_string = dt.strftime("%B %d, %Y %H:%M")
                     # st.write(i['start_time'],date_string)    
-                st.write(res)
-            tmp=None
+                # st.write(res)
+            # tmp=None
 
 
         elif ("agent" or "talk to agent" or "connect me") in query.strip().lower():
